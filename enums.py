@@ -8,6 +8,10 @@ class Auth(Enum):
     LOGOUT = "/logout"
     SIGNUP = "/signup"
 
+class Posts(Enum):
+    CREATE = "/create-post"
+    DELETE = "/delete-post"
+
 class Signup(Enum):
     EMAIL_LENGTH = 8
     USERNAME_LENGTH = 2
