@@ -14,15 +14,17 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_NAME}"
     db.init_app(app)
 
-    from .views import views
-    from .posts import posts
-    from .auth import auth
+    from .views.comments import comments
+    from .views.posts import posts
+    from .views.auth import auth
+    from .views.home import home
 
     app.register_blueprint(auth, url_prefix="/")
-    app.register_blueprint(views, url_prefix="/")
+    app.register_blueprint(home, url_prefix="/")
     app.register_blueprint(posts, url_prefix="/")
+    app.register_blueprint(comments, url_prefix="/")
 
-    from .models import User, Post # Have to put here for circular import
+    from website.models import User # Have to put here for circular import
 
     create_database(app)
 
@@ -40,7 +42,3 @@ def create_database(app: Flask) -> None:
     if not path.exists(f"website/{DB_NAME}"):
         db.create_all(app=app)
         print("Successfully created the database!")
-    # else:
-    #     users = User.query.all()
-    #     for user in users:
-    #         print(user)
